@@ -108,7 +108,7 @@ const name = ({ user, repos }) => {
 };
 
 export const getServerSideProps = async ({ query }) => {
-	const { name } = query;
+	const { name, page } = query;
 	try {
 		let user, repos;
 		const userRes = await fetch(`https://api.github.com/users/${name}`);
@@ -116,7 +116,7 @@ export const getServerSideProps = async ({ query }) => {
 			user = await userRes.json();
 		}
 		const repoRes = await fetch(
-			`https://api.github.com/users/${name}/repos?sort=updated&page=1&per_page=10`
+			`https://api.github.com/users/${name}/repos?sort=updated&page=${page}&per_page=10`
 		);
 		if (repoRes.status === 200) {
 			repos = await repoRes.json();
